@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 
-
 def add(a: float, b: float) -> float:
-    """Сложение двух чисел"""
-    return a + b
+    """Сложение двух чисел с округлением"""
+    return round(a + b, 10)  # Округляем до 10 знаков
 
 def subtract(a: float, b: float) -> float:
-    """Вычитание двух чисел"""
-    return a - b
+    """Вычитание двух чисел с округлением"""
+    return round(a - b, 10)
 
 def multiply(a: float, b: float) -> float:
-    """Умножение двух чисел"""
-    return a * b
+    """Умножение двух чисел с округлением"""
+    return round(a * b, 10)
 
 def divide(a: float, b: float) -> float:
     """Деление двух чисел"""
     if b == 0:
         raise ValueError("Cannot divide by zero")
-    return a / b
+    return round(a / b, 10)
 
 def main():
     """Точка входа для запуска как скрипт"""
