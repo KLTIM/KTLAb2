@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests>
+    <!-- Отдельные тесты для каждой функции -->
+    <test name="test_addition" command="python -m unittest test_add.py" />
+    
+    <test name="test_subtraction" command="python -m unittest test_subtract.py" />
+    
+    <test name="test_multiplication" command="python -m unittest test_multiply.py" />
+    
+    <test name="test_division" command="python -m unittest test_divide.py" />
+    
+    <test name="test_error_cases" command="python -m unittest test_error_cases.py" />
+    
+    <!-- Запуск всех тестов вместе -->
+    <test name="run_all_tests" command="python -m unittest discover -s . -p 'test_*.py'" />
+    
+    <!-- Интеграционный тест всей программы -->
+    <test name="integration_test" command="python -c '
+import calculator
+print(\"Testing calculator functions...\")
+assert calculator.add(2, 3) == 5
+assert calculator.subtract(5, 2) == 3
+assert calculator.multiply(3, 4) == 12
+assert calculator.divide(10, 2) == 5
+try:
+    calculator.divide(1, 0)
+    print(\"ERROR: Should have raised ValueError\")
+except ValueError:
+    print(\"OK: Division by zero correctly raises ValueError\")
+print(\"All integration tests passed!\")
+'" />
