@@ -22,3 +22,10 @@ jobs:
     - name: Run CI/CD Tests
       run: |
         python pythonr.py
+        
+        # Минимальная документация одной командой
+        mkdir -p docs
+        for f in *.py; do
+          python -m pydoc "${f%.py}" > "docs/$f.txt" 2>/dev/null || true
+        done
+        echo "Docs generated" > docs/status.txt
