@@ -28,7 +28,7 @@ jobs:
         
     - name: Auto-generate basic docs
       run: |
-
+        python -c
 import ast
 import os
 
