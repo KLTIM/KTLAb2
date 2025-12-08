@@ -22,4 +22,4 @@ jobs:
         
     - name: Run CI/CD Tests
       run: |
-        python ci_cd_runner.py
+        python pythonr.py
