@@ -18,12 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python-version: '3.10'
         
     - name: Run tests from XML
       run: python ci_cd_runner.py --xml-file test.xml
@@ -41,4 +36,7 @@ jobs:
         path: |
           test-output.xml
           test-report.html
-       
+    - name: Run tests from XML
+      run: python ci_cd_runner.py --xml-file test2.xml
+    - name: Run tests from XML
+      run: python ci_cd_runner.py --xml-file test3.xml
