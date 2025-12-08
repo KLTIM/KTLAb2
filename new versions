@@ -1,0 +1,7 @@
+--- a/calculator.py
++++ b/calculator.py
+@@ -1,4 +1,7 @@
+ #!/usr/bin/env python3
+ """
++ Патч 2.0
+ """
