@@ -17,7 +17,7 @@ def divide(a: float, b: float) -> float:
     if b == 0:
         raise ValueError("Cannot divide by zero")
     return round(a / b, 10)
-print("DOCs")
+print("DOC")
 def main():
     """Точка входа для запуска как скрипт"""
     print("Calculator operations:")
