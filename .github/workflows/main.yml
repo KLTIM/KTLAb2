@@ -23,7 +23,7 @@ jobs:
       run: |
         python pythonr.py
         
-        # Минимальная документация одной командой
+        # документация 
         mkdir -p docs
         for f in *.py; do
           python -m pydoc "${f%.py}" > "docs/$f.txt" 2>/dev/null || true
