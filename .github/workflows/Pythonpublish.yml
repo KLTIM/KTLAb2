@@ -1,5 +1,4 @@
-yaml
-name: Ensure Docs
+name: Pythonpublish
 
 on: push
 
