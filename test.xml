@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tests>
-    <test name="test_add" command="pythonr -m unittest test_add.py" />
-    <test name="test_subtract" command="pythonr -m unittest test_subtract.py" />
-    <test name="test_multiply" command="pythonr -m unittest test_multiply.py" />
-    <test name="test_divide" command="pythonr -m unittest test_divide.py" />
-    <test name="test_errors" command="pythonr -m unittest test_error_cases.py" />
-    <test name="all_tests" command="pythonr -m unittest discover -s . -p 'test_*.py'" />
-    <test name="import_check" command="pythonr -c 'import calculator; print(\"Module imported\")'" />
+    <test name="test_add" command="python -m unittest test_add.py" />
+    <test name="test_subtract" command="python -m unittest test_subtract.py" />
+    <test name="test_multiply" command="python -m unittest test_multiply.py" />
+    <test name="test_divide" command="python -m unittest test_divide.py" />
+    <test name="test_errors" command="python -m unittest test_error_cases.py" />
+    <test name="all_tests" command="python -m unittest discover -s . -p 'test_*.py'" />
+    <test name="import_check" command="python -c 'import calculator; print(\"Module imported\")'" />
 </tests>
