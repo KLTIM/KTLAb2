@@ -20,23 +20,6 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Run tests from XML
-      run: python ci_cd_runner.py --xml-file test.xml
-      
-    - name: Generate test report
+    - name: Run CI/CD Tests
       run: |
-        echo "Test execution completed"
-        echo "See test-output.xml for detailed results"
-        
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results
-        path: |
-          test-output.xml
-          test-report.html
-    - name: Run tests from XML
-      run: python ci_cd_runner.py --xml-file test2.xml
-    - name: Run tests from XML
-      run: python ci_cd_runner.py --xml-file test3.xml
+        python ci_cd_runner.py
