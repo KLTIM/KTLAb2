@@ -19,22 +19,38 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Install simple docstring tool
-      run: pip install docstring-gen==0.2.3
+    - name: Install tools
+      run: |
+        pip install pydoc-markdown
+        pip install mkdocs
         
     - name: Run CI/CD Tests
       run: |
         python pythonr.py
         
-    - name: Auto-generate basic docs
+    - name: Generate documentation
       run: |
-        python -c "
-
-import os
-
-for file in os.listdir('.'):
-    if file.endswith('.py'):
-        try:
-            with open(file, 'r') as f:
-                content = f.read()
-            
+        mkdir -p docs
+        # Генерация документации для всех .py файлов
+        for file in *.py; do
+          if [ -f "$file" ]; then
+            echo "# $file" > "docs/${file}.md"
+            echo "" >> "docs/${file}.md"
+            python -m pydoc "${file%.py}" >> "docs/${file}.md" 2>/dev/null || true
+          fi
+        done
+        # Создание README с информацией
+        echo "# Auto-generated docs" > docs/README.md
+        echo "Generated: $(date)" >> docs/README.md
+        echo "" >> docs/README.md
+        echo "## Files:" >> docs/README.md
+        ls *.py >> docs/README.md 2>/dev/null || echo "No .py files" >> docs/README.md
+        
+    - name: Commit generated docs
+      if: always()
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add docs/
+        git commit -m "Auto-generated documentation [skip ci]" || exit 0
+        git push || exit 0
