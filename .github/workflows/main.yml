@@ -28,8 +28,6 @@ jobs:
         
     - name: Auto-generate basic docs
       run: |
-        # Простая генерация документации без C++ зависимостей
-        python -c "
 import ast
 import os
 
@@ -41,7 +39,7 @@ for file in os.listdir('.'):
             
             tree = ast.parse(content)
             
-            # Простая проверка наличия docstring
+
             has_doc = ast.get_docstring(tree) is not None
             if not has_doc:
                 print(f'No docstring in {file}')
