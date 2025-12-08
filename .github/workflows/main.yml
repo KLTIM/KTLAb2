@@ -19,13 +19,28 @@ jobs:
       with:
         python-version: '3.10'
         
+    - name: Install docstring generator
+      run: pip install docstring-generator
+        
     - name: Run CI/CD Tests
       run: |
         python pythonr.py
         
-        # документация 
-        mkdir -p docs
-        for f in *.py; do
-          python -m pydoc "${f%.py}" > "docs/$f.txt" 2>/dev/null || true
+    - name: Auto-generate docstrings
+      run: |
+        # Автогенерация docstring для измененных файлов
+        changed_files=$(git diff --name-only HEAD^ HEAD -- '*.py' 2>/dev/null || find . -name "*.py")
+        for file in $changed_files; do
+          if [ -f "$file" ]; then
+            python -m docstring_generator "$file" --in-place 2>/dev/null || true
+          fi
         done
-        echo "Docs generated" > docs/status.txt
+        
+    - name: Commit generated docs
+      if: always()
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Auto-generated documentation" || true
+        git push || true
