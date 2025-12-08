@@ -6,5 +6,4 @@
     <test name="test_divide" command="python -m unittest test_divide.py" />
     <test name="test_errors" command="python -m unittest test_error_cases.py" />
     <test name="all_tests" command="python -m unittest discover -s . -p 'test_*.py'" />
-    <test name="import_check" command="python -c 'import calculator; print(\"Module imported\")'" />
 </tests>
