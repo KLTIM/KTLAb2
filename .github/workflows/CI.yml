@@ -1,19 +1,36 @@
-name: CI
-on: [push, pull_request]
+name: Documentation
+
+on: [push] 
+
 jobs:
-  test:
+  build-docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
+    - uses: actions/checkout@v3 # Выгрузка репозитория
+    - name: Set up Python
+      uses: actions/setup-python@v3
       with:
-        python-version: '3.10'
-    - name: Add docs to README
+        python-version: '3.x' # Указываем версию Python
+
+    - name: Install dependencies
       run: |
-        echo "" >> README.md
-        echo "## Документация" >> README.md
-        echo "Файлы проекта:" >> README.md
-        for f in *.py; do
-          echo "- $f" >> README.md
-        done
-        echo "Обновлено: $(date)" >> README.md
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt # Установка Sphinx и других пакетов
+
+    - name: Generate documentation
+      run: |
+        # Создаем файл conf.py, если его нет, и настраиваем autodoc
+        sphinx-quickstart --project "My Project" --author "Your Name" --release "2.0" --ext-autodoc --ext-napoleon --sep -q
+        # Добавьте ваш основной модуль для autodoc в conf.py (sys.path.append)
+
+        # Запускаем сборку документации
+        sphinx-build -b html . _build/html
+      env:
+        # Убедитесь, что ваш код доступен для Sphinx
+        PYTHONPATH: ${{ github.workspace }}
+
+    - name: Deploy documentation 
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _build/html # Папка с готовой документацией
