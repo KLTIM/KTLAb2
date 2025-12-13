@@ -1,36 +1,39 @@
 name: Documentation
 
-on: [push] 
+on: [push]
 
 jobs:
   build-docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3 # Выгрузка репозитория
+    - uses: actions/checkout@v3
+    
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: '3.x' # Указываем версию Python
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt # Установка Sphinx и других пакетов
-
+        python-version: '3.10'
+    
+    - name: Install Sphinx
+      run: pip install sphinx
+    
     - name: Generate documentation
       run: |
-        # Создаем файл conf.py, если его нет, и настраиваем autodoc
-        sphinx-quickstart --project "My Project" --author "Your Name" --release "2.0" --extensions autodoc napoleon --sep -q
-        # Добавьте ваш основной модуль для autodoc в conf.py (sys.path.append)
-
-        # Запускаем сборку документации
+        # Создаем конфигурацию
+        sphinx-quickstart --project "Project" --author "Author" --release "1.0" -q --no-sep
+        
+        # Добавляем путь к коду и настройки
+        echo "
+        import sys
+        import os
+        sys.path.insert(0, os.path.abspath('.'))
+        extensions = ['sphinx.ext.autodoc']
+        " >> conf.py
+        
+        # Собираем документацию
         sphinx-build -b html . _build/html
-      env:
-        # Убедитесь, что ваш код доступен для Sphinx
-        PYTHONPATH: ${{ github.workspace }}
-
-    - name: Deploy documentation 
+    
+    - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: _build/html # Папка с готовой документацией
+        publish_dir: ./_build/html
