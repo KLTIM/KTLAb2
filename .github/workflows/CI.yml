@@ -1,13 +1,16 @@
-
 name: Documentation
 
-on: [push]
+on:
+  push:
+    branches: [ main, master ]  # Триггер для конкретных веток
 
 jobs:
   build-docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Полная история для деплоя
     
     - name: Set up Python
       uses: actions/setup-python@v3
@@ -30,11 +33,28 @@ jobs:
         extensions = ['sphinx.ext.autodoc']
         " >> conf.py
         
+        # Создаем простой index.rst
+        echo "Documentation
+        =============
+        
+        Hello World" > index.rst
+        
         # Собираем документацию
         sphinx-build -b html . _build/html
     
-    - name: Deploy
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
+        # ОБЯЗАТЕЛЬНО: используем secrets.GITHUB_TOKEN
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        
+        # Папка с собранной документацией
         publish_dir: ./_build/html
+        
+        # Опциональные настройки:
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        commit_message: 'Deploy docs: ${{ github.sha }}'
+        
+        # Целевая ветка (по умолчанию gh-pages)
+        publish_branch: gh-pages
