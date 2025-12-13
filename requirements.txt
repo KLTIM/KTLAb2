@@ -1,0 +1,3 @@
+sphinx
+sphinx-rtd-theme # Тема для красивого вида
+interrogate # Опционально, для проверки docstrings
