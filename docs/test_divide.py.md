@@ -393,7 +393,7 @@ CLASSES
      |  skipTest(self, reason)
      |      Skip this test.
      |  
-     |  subTest(self, msg=<object object at 0x7f7f57188b50>, **params)
+     |  subTest(self, msg=<object object at 0x7fa24c988b50>, **params)
      |      Return a context manager that will return the enclosed block
      |      of code in a subtest identified by the optional message and
      |      keyword parameters.  A failure in the subtest marks the test
