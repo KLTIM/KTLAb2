@@ -20,7 +20,7 @@ jobs:
     - name: Generate documentation
       run: |
         # Создаем файл conf.py, если его нет, и настраиваем autodoc
-        sphinx-quickstart --project "My Project" --author "Your Name" --release "2.0" --ext-autodoc --ext-napoleon --sep -q
+        sphinx-quickstart --project "My Project" --author "Your Name" --release "2.0" --extensions autodoc napoleon --sep -q
         # Добавьте ваш основной модуль для autodoc в conf.py (sys.path.append)
 
         # Запускаем сборку документации
